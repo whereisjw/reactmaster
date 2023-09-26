@@ -164,3 +164,99 @@ styled-component로 만든 컴포넌트 안에 일반 태그도 넣을 수 있�
 ```
 
 사스처럼 css값에 바로 적어서 중괄호로 닫으면 scss처럼 css적용이 가능하다 또한 sass에서 현재 태그 자신을 나타낼때 쓰는 엠퍼센드(&)기호를 쓰는 것도 가능하다.
+
+```
+  const Wrapper = styled.div`
+    display: flex;
+    justify-content: center;
+  `;
+  const rotationAnimation = keyframes`
+  0%{
+transform: rotate(0deg);
+border-radius: 0;
+  }
+  50%{
+transform: rotate(360deg);
+border-radius: 100px;
+  }
+  100%{
+    transform: rotate(360deg);
+border-radius: 0;
+  }
+  `;
+  const Box = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    background: tomato;
+    animation: ${rotationAnimation} 1s linear infinite;
+    ${Emoji} {
+      &:hover {
+        font-size: 96px;
+      }
+      &:active {
+        opacity: 0;
+      }
+    }
+```
+
+안에 컴포넌트를 넣을 수도있다. 이런 방식으로 입력하면 태그에 관계없이 적용 시킬 수 있고 적용 시키고 싶은 컴포넌트에만 타겟팅 할 수있다.
+
+### ThemeProvider 를 이용한 dark mode , light mode 다크모드 구현하기
+
+```
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+import App from "./App";
+import { ThemeProvider } from "styled-components";
+const darkTheme = {
+  textColor: "whitesmoke",
+  backgroundColor: "#111",
+};
+const lightTheme = {
+  textColor: "#111",
+  backgroundColor: "whitesmoke",
+};
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <ThemeProvider theme={lightTheme}>
+    <App />
+  </ThemeProvider>
+);
+
+```
+
+index.js에 ThemeProvider import 하고 App(app.js) 를 감싸야한다.
+
+darkTheme 와 lightTheme 각각 변수를 object형태로 선언을 하고 키값은 반드시 동일해야한다.
+
+```
+function App() {
+  const Wrapper = styled.div`
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    background-color: ${(props) => props.theme.backgroundColor};
+  `;
+  const Title = styled.h1`
+    color: ${(props) => props.theme.textColor};
+  `;
+  return (
+    <Wrapper>
+      <Title>Hello</Title>
+    </Wrapper>
+  );
+}
+
+export default App;
+```
+
+화면 넓이만큼 지정한 Wrapper 컴포넌트에는 props로 배경을
+
+안에 글자인 Title컴포넌트에는 props로 모드의 텍스트컬러를 반영한다
