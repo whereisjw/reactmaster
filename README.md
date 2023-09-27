@@ -1,7 +1,9 @@
 # typescript
 
 npx create-react-app my-app --template typescript
+
 npm install --save typescript @types/node @types/react @types/react-dom @types/jest
+
 styled-component 가 6버전이면 확장자면 tsx로 바꿔주면된다
 
 ```
@@ -98,4 +100,5 @@ declare module 'styled-components' {
 ```
 
 styled-components 템플릿 복붙
+
 주소 : https://styled-components.com/docs/api#typescript
